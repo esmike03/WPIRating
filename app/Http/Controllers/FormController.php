@@ -27,6 +27,19 @@ class FormController extends Controller
             'comments' => 'nullable|string|max:255',
         ]);
 
+        // Merge all rating-related arrays
+        $allRatings = array_merge(
+            $validatedData['personalrelation'],
+            $validatedData['grooming'],
+            $validatedData['stocks'],
+            $validatedData['expenses']
+        );
+
+        // Calculate the average rating
+        $totalScore = array_sum($allRatings);
+        $totalItems = count($allRatings);
+        $averageRating = $totalItems > 0 ? $totalScore / $totalItems : 0;
+
         // Save to database
         Personnel::create([
             'date' => $validatedData['date'],
@@ -40,6 +53,7 @@ class FormController extends Controller
             'stocks' => json_encode($validatedData['stocks']),
             'expenses' => json_encode($validatedData['expenses']),
             'comments' => json_encode($validatedData['comments']),
+            'average_rating' => round($averageRating, 2),
         ]);
 
         // Prepare email data
@@ -55,6 +69,7 @@ class FormController extends Controller
             'stocks' => json_encode($validatedData['stocks']),
             'expenses' => json_encode($validatedData['expenses']),
             'comments' => json_encode($validatedData['comments']),
+            'average_rating' => round($averageRating, 2),
         ];
         // Send email
         Mail::to("sarabiaearlmike14@gmail.com")->send(new PersonnelFormMail($data));
@@ -74,6 +89,16 @@ class FormController extends Controller
             'comments' => 'nullable|string|max:255',
         ]);
 
+        $allRatings = array_merge(
+            $validatedData['personalrelation'],
+            $validatedData['sales'],
+        );
+
+        // Calculate the average rating
+        $totalScore = array_sum($allRatings);
+        $totalItems = count($allRatings);
+        $averageRating = $totalItems > 0 ? $totalScore / $totalItems : 0;
+
         // Save to database
         Customer::create([
             'date' => $validatedData['date'],
@@ -83,6 +108,7 @@ class FormController extends Controller
             'personalrelation' => json_encode($validatedData['personalrelation']),
             'sales' => json_encode($validatedData['sales']),
             'comments' => $validatedData['comments'],
+            'average_rating' => round($averageRating, 2),
         ]);
 
         $data = [
@@ -93,9 +119,10 @@ class FormController extends Controller
             'personalrelation' => json_encode($validatedData['personalrelation']),
             'sales' => json_encode($validatedData['sales']),
             'comments' => $validatedData['comments'],
+            'average_rating' => round($averageRating, 2),
         ];
-            // Send email
-            Mail::to("sarabiaearlmike14@gmail.com")->send(new CustomerFormMail($data));
+        // Send email
+        Mail::to("sarabiaearlmike14@gmail.com")->send(new CustomerFormMail($data));
 
         return response()->json(['success' => true]);
     }

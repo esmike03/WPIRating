@@ -20,7 +20,15 @@
             <td style="padding: 8px;"><strong>Address:</strong> {{ $data['address'] }}</td>
         </tr>
     </table>
+    @php
+        $color = $data['average_rating'] >= 7 ? 'green' : ($data['average_rating'] >= 4 ? 'orange' : 'red');
+    @endphp
 
+    <h1>Average Rating:
+        <span style="font-weight: bold; color: {{ $color }};">
+            {{ $data['average_rating'] }}
+        </span>
+    </h1>
     <hr style="border: 1px solid #ddd; margin: 20px 0;">
 
     <!-- Two-column section for categories -->

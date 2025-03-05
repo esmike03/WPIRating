@@ -24,6 +24,16 @@
             <td style="padding: 8px;"><strong>Manager Name:</strong> {{ $data['manager_name'] }}</td>
         </tr>
     </table>
+    @php
+        $color = $data['average_rating'] >= 7 ? 'green' : ($data['average_rating'] >= 4 ? 'orange' : 'red');
+    @endphp
+
+    <h1>Average Rating:
+        <span style="font-weight: bold; color: {{ $color }};">
+            {{ $data['average_rating'] }}
+        </span>
+    </h1>
+
 
     <hr style="border: 1px solid #ddd; margin: 20px 0;">
 
@@ -106,6 +116,10 @@
     <p style="text-align: center; margin-top: 20px; font-size: 12px; color: #7f8c8d;">
         <em>This is an automated email. Please do not reply.</em>
     </p>
+    <div style="display: flex; justify-content: center; align-items: center;">
+        <img src="{{ asset('images/logo.png') }}" alt="Logo" style="width: 100px;" />
+    </div>
+
 
 </body>
 

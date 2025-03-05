@@ -18,6 +18,10 @@
 </head>
 
 <body class="flex items-center justify-center min-h-screen bg-gray-100 font-['Open_Sans']">
+
+    <div>
+        <img src=""/>
+    </div>
     <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <!-- Customer Card -->
         <div class="bg-white shadow-lg rounded-2xl p-6 w-64 text-center hover:scale-105 hover:text-green-500 transition-transform cursor-pointer"
