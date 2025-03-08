@@ -72,7 +72,7 @@ class FormController extends Controller
             'average_rating' => round($averageRating, 2),
         ];
         // Send email
-        Mail::to("sarabiaearlmike14@gmail.com")->send(new PersonnelFormMail($data));
+        Mail::to(["jsdsmiphil@gmail.com", "tejadacristopher89@gmail.com", "cabahugjunmar@gmail.com"])->send(new PersonnelFormMail($data));
 
         return response()->json(['success' => true]);
     }
@@ -122,7 +122,7 @@ class FormController extends Controller
             'average_rating' => round($averageRating, 2),
         ];
         // Send email
-        Mail::to("sarabiaearlmike14@gmail.com")->send(new CustomerFormMail($data));
+        Mail::to(["jsdsmiphil@gmail.com", "tejadacristopher89@gmail.com", "cabahugjunmar@gmail.com", "pops.socorro81@gmail.com"])->send(new CustomerFormMail($data));
 
         return response()->json(['success' => true]);
     }

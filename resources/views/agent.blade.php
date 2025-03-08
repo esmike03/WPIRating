@@ -34,7 +34,7 @@
             from 1 (lowest) to 10 (highest)</h2>
         <form x-data="formHandler()" @submit.prevent="submitForm">
             <div class="mt-4 grid grid-cols-2 gap-4">
-                <div><strong class="text-gray-800 text-sm">Date:</strong> <input type="date" x-model="form.date"
+                <div><strong class="text-gray-800 text-sm">Date:</strong> <input type="date"  x-model="form.date"
                         class="rounded-md border-1 shadow-md border-gray-200 p-1 w-full bg-white"
                         :class="errors.date ? 'border-red-400' : 'border-gray-200'" @input="errors.date = false"></div>
                 <div><strong class="text-gray-800 text-sm">Area Code:</strong> <input type="text"
@@ -197,7 +197,7 @@
         function formHandler() {
             return {
                 form: {
-                    date: '',
+                    date: '{{ date('Y-m-d') }}',
                     area_code: '',
                     agent_name: '',
                     partner_name: '',
@@ -289,6 +289,15 @@
                         return;
                     }
 
+                    // Show loading indicator
+                    Swal.fire({
+                        title: 'Submitting...',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+
                     try {
                         let response = await fetch("{{ route('form.submit') }}", {
                             method: "POST",
@@ -300,6 +309,9 @@
                         });
 
                         let result = await response.json();
+
+                        // Close the loading modal before showing the result
+                        Swal.close();
 
                         if (result.success) {
                             Swal.fire({
@@ -320,6 +332,7 @@
                         }
                     } catch (error) {
                         console.error("Error submitting form:", error);
+                        Swal.close();
                         Swal.fire({
                             title: "Error!",
                             text: "Something went wrong!",
@@ -331,6 +344,7 @@
             };
         }
     </script>
+
 
 </body>
 

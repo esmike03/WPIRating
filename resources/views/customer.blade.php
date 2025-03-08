@@ -130,7 +130,7 @@
         function formHandler() {
             return {
                 form: {
-                    date: '',
+                    date: '{{ date("Y-m-d") }}',
                     customer_code: '',
                     customer_name: '',
                     address: '',
@@ -155,7 +155,11 @@
                         'To the Supervisor',
                         'To the Office Feedback',
                     ],
-                    sales: ['Ordering Concerns', 'Terms Concerns', 'Deal Concerns', 'Discounting Concerns',
+                    sales: [
+                        'Ordering Concerns',
+                        'Terms Concerns',
+                        'Deal Concerns',
+                        'Discounting Concerns',
                         'Collection Concerns',
                     ],
                 },
@@ -205,7 +209,14 @@
                         return;
                     }
 
-
+                    // Show loading indicator before sending the request
+                    Swal.fire({
+                        title: 'Submitting...',
+                        allowOutsideClick: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
 
                     try {
                         let response = await fetch("{{ route('form2.submit') }}", {
@@ -218,6 +229,9 @@
                         });
 
                         let result = await response.json();
+
+                        // Close the loading indicator
+                        Swal.close();
 
                         if (result.success) {
                             Swal.fire({
@@ -238,6 +252,7 @@
                         }
                     } catch (error) {
                         console.error("Error submitting form:", error);
+                        Swal.close();
                         Swal.fire({
                             title: "Error!",
                             text: "Something went wrong!",

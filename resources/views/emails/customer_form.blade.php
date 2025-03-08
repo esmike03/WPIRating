@@ -24,24 +24,13 @@
         $color = $data['average_rating'] >= 7 ? 'green' : ($data['average_rating'] >= 4 ? 'orange' : 'red');
     @endphp
 
-    <h1>Average Rating:
+    <h3>Average Rating:
         <span style="font-weight: bold; color: {{ $color }};">
             {{ $data['average_rating'] }}
         </span>
-    </h1>
+    </h3>
 
     <p style="padding: 8px;"><strong>Comments and Remarks:</strong> {{ $data['comments'] }}</p>
-
-    <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
-        <tr>
-            <td align="center">
-                <img src="https://i.imgur.com/LLLS3V2.png" alt="Logo" style="width: 100px; display: block;" />
-            </td>
-        </tr>
-    </table>
-    <p style="text-align: center; margin-top: 20px; font-size: 12px; color: #7f8c8d;">
-        <em>This is an automated email. Please do not reply.</em>
-    </p>
 
     <hr style="border: 1px solid #ddd; margin: 20px 0;">
 
